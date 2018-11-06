@@ -1,0 +1,218 @@
+<?php
+
+namespace {namespace};
+
+use Swoft\Http\Server\Bean\Annotation\Controller;
+use Swoft\Http\Server\Bean\Annotation\RequestMethod;
+use {modelNamespace};
+use Swoft\Admin\Admin;
+use Swoft\Admin\Form;
+use Swoft\Admin\Grid;
+use Swoft\Admin\Layout\Content;
+use Swoft\Admin\Show;
+use Swoft\Http\Server\Bean\Annotation\RequestMapping;
+use Swoft\Support\Collection;
+
+/**
+ * @Controller("{route}")
+ */
+class {class}
+{
+   /**
+    * 创建表格
+    *
+    * @return Grid
+    */
+    protected function grid()
+    {
+        $grid = new Grid();
+
+        {grid}
+
+        return $grid;
+    }
+
+    /**
+     * 创建表单
+     *
+     * @param mixed $id
+     * @return Form
+     */
+    protected function form($id = null)
+    {
+        $form = new Form();
+
+        $form->setId($id);
+
+        // 更改布局风格
+        $form->style(Form::STYLE_ROW);
+
+        {form}
+
+        return $form;
+    }
+
+    /**
+     * 创建视图
+     *
+     * @param mixed $id
+     * @return Show
+     */
+    protected function show($id)
+    {
+        $show = new Show($id);
+
+        {show}
+
+        return $show;
+    }
+
+    /**
+     * 列表页
+     *
+     * @RequestMapping(route="{route}", method=RequestMethod::GET)
+     *
+     * @param Content $content
+     * @return mixed
+     */
+    public function index(Content $content)
+    {
+        $grid = $this->grid();
+
+        if ($response = $grid->export(function (Collection $records) {
+            // 可以对待导出的内容进行过滤或加工
+            return $records;
+        })) {
+            // 返回导出内容
+            return $response;
+        }
+
+        $header = translate_label('{controller}');
+
+        // 添加面包屑导航
+        $content->breadcrumb($header);
+
+        return $content
+            ->header($header)
+            ->description(translate_label('List'))
+            ->body($grid)
+            ->response();
+    }
+
+    /**
+     * 详情页
+     *
+     * @RequestMapping(route="view/{id}", method=RequestMethod::GET)
+     *
+     * @param mixed $id
+     * @param Content $content
+     * @return mixed
+     */
+    public function view($id, Content $content)
+    {
+        $header = translate_label('{controller}');
+        $current = translate_label('View');
+
+        // 添加面包屑导航
+        $content->breadcrumb($header, Admin::url()->list());
+        $content->breadcrumb($current);
+
+        return $content
+            ->header($header)
+            ->description($current)
+            ->body($this->show($id))
+            ->response();
+    }
+
+    /**
+     * 新增页
+     *
+     * @RequestMapping(route="create", method=RequestMethod::GET)
+     *
+     * @param Content $content
+     * @return mixed
+     */
+    public function create(Content $content)
+    {
+        $header = translate_label('{controller}');
+        $current = translate_label('Create');
+
+        // 添加面包屑导航
+        $content->breadcrumb($header, Admin::url()->list());
+        $content->breadcrumb($current);
+
+        return $content
+            ->header($header)
+            ->description($current)
+            ->body($this->form())
+            ->response();
+    }
+
+    /**
+     * 编辑页
+     *
+     * @RequestMapping(route="{id}", method=RequestMethod::GET)
+     *
+     * @param mixed $id
+     * @param Content $content
+     * @return mixed
+     */
+    public function edit($id, Content $content)
+    {
+        $header = translate_label('{controller}');
+        $current = translate_label('Edit');
+
+        // 添加面包屑导航
+        $content->breadcrumb($header, Admin::url()->list());
+        $content->breadcrumb($current);
+
+        return $content
+            ->header($header)
+            ->description($current)
+            ->body($this->form($id)->edit())
+            ->response();
+    }
+
+    /**
+     * 修改记录(包括修改单个字段)
+     *
+     * @RequestMapping(route="{id}", method=RequestMethod::POST)
+     *
+     * @param mixed $id
+     * @return mixed
+     */
+    public function update($id)
+    {
+        return $this->form($id){updating}
+            ->update()
+            ->done();
+    }
+
+    /**
+     * 新增记录
+     *
+     * @RequestMapping(route="create", method=RequestMethod::POST)
+     *
+     * @return mixed
+     */
+    public function insert()
+    {
+        return $this->form(){inserting}
+            ->insert()
+            ->done(Admin::url()->list());
+    }
+
+    /**
+     * 删除(批量)记录
+     *
+     * @RequestMapping(route="{id}", method=RequestMethod::DELETE)
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        return $this->form($id)->destroyAndResponse();
+    }
+
+}
