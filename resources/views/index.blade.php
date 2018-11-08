@@ -1,7 +1,4 @@
-@php
-    $isPjax = Swoft\Admin\Admin::isPjaxRequest();
-@endphp
-@if (!$isPjax)
+@if (!is_pjax_request())
     @include('admin::index-header')
 @endif
 
@@ -10,6 +7,6 @@
 {!! \Swoft\Admin\Admin::js() !!}
 {!! \Swoft\Admin\Admin::script() !!}
 
-@if (!$isPjax)
+@if (!is_pjax_request())
     @include('admin::index-footer')
 @endif

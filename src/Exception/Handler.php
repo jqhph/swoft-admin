@@ -49,6 +49,13 @@ class Handler
      */
     public static function response(\Throwable $e)
     {
+        if (
+            (is_ajax_request() && !is_pjax_request()) ||
+            (is_ajax_request() && in_array(request()->getMethod(), ['POST', 'PUT', 'DELETE']))
+        ) {
+            return self::responseJson($e);
+        }
+
         // 路由不存在
         if ($e instanceof NotAcceptableException) {
             $request = RequestContext::getRequest();
@@ -67,12 +74,19 @@ class Handler
         }
 
         if (!config('admin.use-whoops')) {
-            return Admin::content()
-                ->body(static::renderException($e))
-                ->response()
-                ->withStatus(500);
+            return self::responseWithDefault($e);
         }
 
+        // 使用 whoops 插件渲染错误信息
+        return self::responseWithWhoops($e);
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return ResponseInterface
+     */
+    protected static function responseWithWhoops(\Throwable $e)
+    {
         $whoops = new \Whoops\Run;
 
         $handler = new \Whoops\Handler\PrettyPageHandler;
@@ -83,6 +97,43 @@ class Handler
         $whoops->allowQuit(false);
 
         return html_response($whoops->handleException($e))->withStatus(500);
+    }
+
+    /**
+     * 使用系统内置错误信息处理功能渲染错误信息
+     *
+     * @param \Throwable $e
+     * @return ResponseInterface
+     */
+    protected static function responseWithDefault(\Throwable $e)
+    {
+        return Admin::content()
+            ->body(static::renderException($e))
+            ->response()
+            ->withStatus(500);
+    }
+
+    /**
+     * 响应json数据到前端
+     *
+     * @param \Throwable $e
+     * @return ResponseInterface
+     */
+    protected static function responseJson(\Throwable $e)
+    {
+        $data = [
+            'status' => 0,
+            'data' => [],
+            'error' => [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTraceAsString(),
+            ],
+        ];
+
+        return response()->json($data, 500);
     }
 
     /**

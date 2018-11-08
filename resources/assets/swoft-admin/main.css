@@ -1289,3 +1289,7 @@ input.form-control {
     100% { transform: rotate(360deg); }
 }
 /****************** nprogress *******************/
+
+.input-group-sm>.form-control,.input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn{
+    border-radius:0;
+}

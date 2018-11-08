@@ -195,10 +195,10 @@ class Collector implements Arrayable
 
     protected function getRequestType()
     {
-        if (Admin::isPjaxRequest()) {
+        if (is_pjax_request()) {
             return 'pjax';
         }
-        if (Admin::isAjaxRequest()) {
+        if (is_ajax_request()) {
             return  'ajax';
         }
         return 'doc';

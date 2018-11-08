@@ -428,3 +428,34 @@ if (!function_exists('translate_label')) {
         return Admin::translateLabel($column);
     }
 }
+
+
+if (!function_exists('is_pjax_request')) {
+    /**
+     * 判断是否是pjax请求
+     *
+     * @return bool
+     */
+    function is_pjax_request()
+    {
+        $request = \Swoft\Core\RequestContext::getRequest();
+
+        return (bool)isset($request->getHeader('X-PJAX')[0]) ? $request->getHeader('X-PJAX')[0] : false;
+    }
+}
+
+if (!function_exists('is_ajax_request')) {
+    /**
+     * 判断是否是ajax请求
+     *
+     * @return bool
+     */
+    function is_ajax_request()
+    {
+        $request = \Swoft\Core\RequestContext::getRequest();
+
+        $xq = isset($request->getHeader('X-Requested-With')[0]) ? $request->getHeader('X-Requested-With')[0] : '';
+
+        return 'XMLHttpRequest' === $xq;
+    }
+}

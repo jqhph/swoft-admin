@@ -59,7 +59,7 @@
             }
             .text-area {
                 width: 600px;
-                padding-top: 120px;
+                padding-top: 20%;
                 margin-left: 40px;
                 text-align: center;
             }
@@ -97,7 +97,7 @@
             }
             .text-area {
                 width: 400px;
-                padding-top: 150px;
+                padding-top: 20%;
                 margin-left: 40px;
                 text-align: center;
             }
@@ -127,7 +127,7 @@
             }
             .text-area {
                 width: 250px;
-                padding-top: 200px;
+                padding-top: 20%;
                 margin-left: 20px;
                 text-align: center;
             }

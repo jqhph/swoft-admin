@@ -41,7 +41,7 @@
 <div class="wrapper">
 
     @if ($allowNavbarAndSidebar)
-        @include(Swoft\Admin\Admin::getNavbarView())
+        {!! Swoft\Admin\Admin::getNavbar()->render() !!}
         @include('admin::partials.sidebar')
     @endif
 

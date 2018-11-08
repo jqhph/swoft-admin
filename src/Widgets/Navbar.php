@@ -2,6 +2,8 @@
 
 namespace Swoft\Admin\Widgets;
 
+use Swoft\Admin\AbstractNavbar;
+use Swoft\Admin\Bean\Collector\AdminNavbarCollector;
 use Swoft\Support\Contracts\Htmlable;
 use Swoft\Support\Contracts\Renderable;
 
@@ -11,6 +13,11 @@ class Navbar implements Renderable
      * @var array
      */
     protected $elements = [];
+
+    /**
+     * @var string
+     */
+    protected $view = 'admin::partials.header';
 
     /**
      * Navbar constructor.
@@ -30,7 +37,7 @@ class Navbar implements Renderable
      */
     public function left($element)
     {
-        $this->elements['left']->push($element);
+        $this->elements['left']->push(value($element));
 
         return $this;
     }
@@ -42,7 +49,7 @@ class Navbar implements Renderable
      */
     public function right($element)
     {
-        $this->elements['right']->push($element);
+        $this->elements['right']->push(value($element));
 
         return $this;
     }
@@ -60,11 +67,74 @@ class Navbar implements Renderable
     }
 
     /**
+     * 用户自定义导航栏
+     *
+     * @return AbstractNavbar|null
+     */
+    protected function getCustomNavbar()
+    {
+        $class = AdminNavbarCollector::getCollector();
+        if (!$class) {
+            return null;
+        }
+        if (!class_exists($class)) {
+            throw new \UnexpectedValueException('自定义导航栏类'.$class.'不存在');
+        }
+
+        $navbar = new $class();
+
+        if (!$navbar instanceof AbstractNavbar) {
+            throw new \UnexpectedValueException('自定义导航栏类'.$class.'必须继承'.AbstractNavbar::class);
+        }
+
+        return $navbar;
+    }
+
+    /**
+     * 构建用户自定义导航栏内容
+     */
+    protected function buildCustomNavbar()
+    {
+        $navbar = $this->getCustomNavbar();
+        if (!$navbar) {
+            return;
+        }
+
+        $navbar->build($this);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getView()
+    {
+        $navbar = $this->getCustomNavbar();
+        if (!$navbar) {
+            return $this->view;
+        }
+
+        return $navbar->getView() ?: $this->view;
+    }
+
+    /**
+     * @return string
+     */
+    public function render()
+    {
+        $this->buildCustomNavbar();
+
+        $left = $this->build('left');
+        $right = $this->build();
+
+        return blade($this->getView(), ['left' => &$left, 'right' => $right])->render();
+    }
+
+    /**
      * @param string $part
      *
      * @return mixed
      */
-    public function render($part = 'right')
+    protected function build($part = 'right')
     {
         if (!isset($this->elements[$part]) || $this->elements[$part]->isEmpty()) {
             return '';

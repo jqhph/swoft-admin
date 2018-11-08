@@ -234,9 +234,9 @@
                 logid = opt.logid,
                 status = opt.status || '';
 
-            if (status == 302) {
+            if (status > 300 && status < 400) {
                 status = "<span class='label label-warning'>302</span> &nbsp; ";
-            } else if (status && status != 200) {
+            } else if (status && status >= 400) {
                 status = "<span class='label label-danger'>"+status+"</span> &nbsp; ";
             }
 

@@ -227,7 +227,7 @@ trait FormModel
     protected function ajaxResponse($message, bool $status = true)
     {
         // ajax but not pjax
-        if (Admin::isAjaxRequest() && !Admin::isPjaxRequest()) {
+        if (is_ajax_request() && !is_pjax_request()) {
             return response()->json([
                 'status'  => $status,
                 'message' => $message,

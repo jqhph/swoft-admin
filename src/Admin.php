@@ -68,13 +68,6 @@ class Admin
     protected static $primaryKeyMap = [];
 
     /**
-     * 导航栏模板
-     *
-     * @var string
-     */
-    protected static $navbarView = 'admin::partials.header';
-
-    /**
      * @var bool
      */
     private static $loadedEnv;
@@ -391,7 +384,7 @@ class Admin
             return;
         }
 
-        if (static::getContextAttribute('has_new_js') && static::isPjaxRequest()) {
+        if (static::getContextAttribute('has_new_js') && is_pjax_request()) {
             // 如果是pjax请求, 需要等所有js脚本加载完成之后才能执行js代码
             // 此处必须是使用one方法绑定事件监听函数, 否则会多次执行
             return '<script>$(document).one("pjax:script",function(){'.join(';', $scripts).'});</script>';
@@ -457,41 +450,15 @@ class Admin
     }
 
     /**
-     * 如果用户需要自定义导航栏模板
-     * 可以通过此方法设置
-     *
-     * @param string $view
-     */
-    public static function setNavbarView(string $view)
-    {
-        if ($view) {
-            static::$navbarView = $view;
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public static function getNavbarView()
-    {
-        return static::$navbarView;
-    }
-
-    /**
      * 可以通过此对象动态的往头部导航栏添加内容
      * 只对当前请求有效
      * 如果需要添加全局生效的内容到导航栏
      * 请调用setNavbarView方法设置自定义导航栏模板
      *
-     * @param Closure|null $builder
-     * @return Navbar
+     * @param Closure $builder
      */
-    public static function navbar(Closure $builder = null)
+    public static function navbar(Closure $builder)
     {
-        if (is_null($builder)) {
-            return static::getNavbar();
-        }
-
         call_user_func($builder, static::getNavbar());
     }
 
@@ -618,31 +585,6 @@ class Admin
     public static function booted(callable $callback)
     {
         static::$booted[] = $callback;
-    }
-
-
-    /**
-     * 判断是否是pjax请求
-     *
-     * @return bool|string
-     */
-    public static function isPjaxRequest()
-    {
-        $request = RequestContext::getRequest();
-
-        return (bool)isset($request->getHeader('X-PJAX')[0]) ? $request->getHeader('X-PJAX')[0] : '';
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isAjaxRequest()
-    {
-        $request = RequestContext::getRequest();
-
-        $xq = isset($request->getHeader('X-Requested-With')[0]) ? $request->getHeader('X-Requested-With')[0] : '';
-
-        return 'XMLHttpRequest' === $xq;
     }
 
 }

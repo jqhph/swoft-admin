@@ -101,12 +101,12 @@ class VerifyCsrfToken implements MiddlewareInterface
      */
     protected function responseError()
     {
-        if (Admin::isPjaxRequest()) {
+        if (is_pjax_request()) {
             admin_warning('419', 'Sorry, your session has expired. Please refresh and try again.');
             return redirect_refresh();
         }
 
-        if (Admin::isAjaxRequest()) {
+        if (is_ajax_request()) {
             return RequestContext::getResponse()->withStatus(419)->json([
                 'status' => false,
                 'msg' => 'Sorry, your session has expired. Please refresh and try again.',

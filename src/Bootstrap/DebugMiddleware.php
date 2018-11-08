@@ -21,7 +21,7 @@ class DebugMiddleware implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (!Admin::isAjaxRequest() || !Admin::isDebug()) {
+        if (!is_ajax_request() || !Admin::isDebug()) {
             return $handler->handle($request);
         }
 
@@ -35,29 +35,57 @@ class DebugMiddleware implements MiddlewareInterface
             return $resp;
         }
 
-        if (Admin::isPjaxRequest()) {
-            $data .= $this->buildDebugDataPjax($collector);
-
+        if ($this->isPjaxReading()) {
+            $data .= $this->buildDebugDataForPjax($collector);
         } else {
-            $array = is_array($data) ? $data : json_decode($data, true);
-
-            if (is_array($array) || empty($data)) {
-                if (empty($data)) {
-                    $array = [];
-                }
-                $array['__traces__'] = $collector->toArray();
-                $data = json_encode($array);
-            }
+            $data = $this->buildDebugDataForAjax($collector, $resp, $data);
         }
 
         return $resp->withBody(new SwooleStream($data));
     }
 
     /**
+     * @return bool
+     */
+    protected function isPjaxReading()
+    {
+        return is_pjax_request() && !in_array(request()->getMethod(), ['POST', 'PUT', 'DELETE']);
+    }
+
+    /**
+     * @param Collector $collector
+     * @param ResponseInterface $response
+     * @param $responseData
+     * @return string
+     */
+    protected function buildDebugDataForAjax(
+        Collector $collector,
+        ResponseInterface $response,
+        $responseData
+    )
+    {
+        $array = is_array($responseData) ? $responseData : json_decode($responseData, true);
+
+        if (is_array($array) || empty($responseData)) {
+            if (empty($responseData)) {
+                $array = [];
+            }
+            $debugInfo = $collector->toArray();
+            $debugInfo['route']['status'] = $response->getStatusCode();
+
+            $array['__traces__'] = $debugInfo;
+            return json_encode($array);
+        }
+
+        return $responseData;
+    }
+
+
+    /**
      * @param Collector $collector
      * @return string
      */
-    protected function buildDebugDataPjax(Collector $collector)
+    protected function buildDebugDataForPjax(Collector $collector)
     {
         $prev = $this->getPrevRequestDebugData();
 

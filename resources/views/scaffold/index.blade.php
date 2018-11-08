@@ -255,7 +255,7 @@
 {!! html_js('@admin/AdminLTE/plugins/iCheck/icheck.min.js') !!}
 {!! html_js('@admin/AdminLTE/plugins/select2/select2.full.min.js') !!}
 <script>
-    @if(\Swoft\Admin\Admin::isPjaxRequest())
+    @if(is_pjax_request())
         $(document).one('pjax:script', scaffold_init);
     @else
         $(scaffold_init);
