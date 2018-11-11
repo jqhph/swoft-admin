@@ -1,11 +1,11 @@
 # swoft-admin
 
-`Swoft Admin`是基于`swoft`框架开发而成的后台系统快速构建工具，使用极少的代码即可构建出一个功能完善的后台系统，性能强悍、代码简洁、易扩展。
+`Swoft Admin`是基于[swoft](https://github.com/swoft-cloud/swoft)框架开发而成的后台系统快速构建工具，使用极少的代码即可构建出一个功能完善的后台系统，性能强悍、代码简洁、易扩展。
 
 >本项目基于[laravel-admin](http://laravel-admin.org/)重构而成，保留了基本的代码架构和大部分api。主要改动如下：
 >+ 分离了页面构建层和数据层（移除了对框架orm的强绑定）
 >+ 解决了`pjax`按需加载问题 
->+ 调整了部分api的用法
+>+ 调整了部分api的用法，使用更方便
 
 [Demo](http://103.45.104.52:8000)|[文档]()
 
@@ -26,10 +26,6 @@
 + 支持扩展组件，支持插件机制
 + 支持数据库版本迁移管理
 + 基于[league/flysystem](http://flysystem.thephpleague.com/docs/)上传文件，可以轻松实现远程上传及云服务上传
-
-## Demo
-
-[Demo](http://103.45.104.52:8000)
 
 
 ## 后端依赖组件
@@ -61,6 +57,15 @@
 ## 安装
 ```
 composer require lldca/swoft-admin
+```
+然后打开`@root/config/properties/app.php`文件，加上注解扫描配置
+```php
+ 'bootScan'     => [
+    // 必须加上 
+    'Swoft\Admin\Controllers',
+    'Swoft\Admin\Bootstrap',
+    'Swoft\Admin\Console',
+],
 ```
 
 
