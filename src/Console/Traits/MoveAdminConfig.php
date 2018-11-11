@@ -113,12 +113,6 @@ EOF;
         'namespaces' => [
 
         ],
-        // 静态资源读取目录
-        'assets' => [
-            '@root/public'
-        ],
-        // 读取静态资源
-        'read-assets' => false,
     ],
     
     'admin' => require __DIR__ . '/admin.php',
