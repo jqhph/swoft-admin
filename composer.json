@@ -1,0 +1,43 @@
+{
+  "name": "lldca/swoft-admin",
+  "description": "后台系统快速构建工具",
+  "keywords": ["swoft admin"],
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/jqhph/swoft-admin/issues",
+    "source": "https://github.com/jqhph/swoft-admin"
+  },
+  "homepage": "",
+  "authors": [
+    {
+      "name": "Jqh",
+      "email": "841324345@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "filp/whoops": "2.*",
+    "league/flysystem": "1.*",
+    "lldca/swoft-blade": "0.1.*",
+    "lldca/swoft-migration": "0.1.*"
+  },
+  "replace": {
+
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "Swoft\\Admin\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}

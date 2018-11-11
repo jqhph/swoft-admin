@@ -1,0 +1,89 @@
+<?php
+
+namespace Swoft\Admin\Form\Field;
+
+use Swoft\Admin\Form\Field;
+use Swoft\Support\Arr;
+
+class Tags extends Field
+{
+    /**
+     * @var array
+     */
+    protected $value = [];
+
+    /**
+     * @var array
+     */
+    protected static $css = [
+        '@admin/AdminLTE/plugins/select2/select2.min.css',
+    ];
+
+    /**
+     * @var array
+     */
+    protected static $js = [
+        '@admin/AdminLTE/plugins/select2/select2.full.min.js',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fill($data)
+    {
+        $this->value = array_get($data, $this->column);
+
+        if (is_string($this->value)) {
+            $this->value = explode(',', $this->value);
+        }
+
+        $this->value = array_filter((array) $this->value, 'strlen');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prepare($value)
+    {
+        if (is_array($value) && !Arr::isAssoc($value)) {
+            $value = implode(',', array_filter($value, 'strlen'));
+        }
+
+        return $value;
+    }
+
+    /**
+     * Get or set value for this field.
+     *
+     * @param mixed $value
+     *
+     * @return $this|array|mixed
+     */
+    public function value($value = null)
+    {
+        if (is_null($value)) {
+            return empty($this->value) ? ($this->getDefault() ?? []) : $this->value;
+        }
+
+        $this->value = (array) $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function render()
+    {
+        $this->script = "$(\"{$this->getElementClassSelector()}\").select2({
+            tags: true,
+            tokenSeparators: [',']
+        });";
+
+        $this->addVariables([
+            'options' => array_unique(array_merge($this->value, $this->options)),
+        ]);
+
+        return parent::render();
+    }
+}

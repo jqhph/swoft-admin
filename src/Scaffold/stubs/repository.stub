@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Admin\Repositories;
+
+use Swoft\Admin\Bean\Annotation\AdminRepository;
+use Swoft\Admin\Repository\AbstractRepository;
+use Swoft\Admin\Form;
+use Swoft\Admin\Grid\Model;
+use {controllerClass};
+use {modelClass} as {model}Entity;
+use Swoft\Admin\Show;
+
+/**
+ * @AdminRepository({baseController}::class)
+ */
+class {controller} extends AbstractRepository
+{
+     /**
+      * 实体类类名
+      *
+      * @var string
+      */
+     protected $entityClass = {model}Entity::class;
+
+}
