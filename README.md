@@ -1,12 +1,13 @@
 # swoft-admin
 
-`Swoft Admin`是基于`swoft`框架开发而成的后台系统快速构建工具，使用极少的代码即可构建出一个功能完善的后台系统，性能强悍、代码简洁清晰、易扩展。
+`Swoft Admin`是基于`swoft`框架开发而成的后台系统快速构建工具，使用极少的代码即可构建出一个功能完善的后台系统，性能强悍、代码简洁、易扩展。
 
->本项目基于[laravel-admin](http://laravel-admin.org/)二次开发而成，保留了基本的代码架构和大部分api。主要改动如下：
->1.分离了页面构建层和数据层（移除了对框架orm的强绑定）
->2.解决了`pjax`按需加载问题 
->3.以及部分api的使用体验优化
+>本项目基于[laravel-admin](http://laravel-admin.org/)重构而成，保留了基本的代码架构和大部分api。主要改动如下：
+>+ 分离了页面构建层和数据层（移除了对框架orm的强绑定）
+>+ 解决了`pjax`按需加载问题 
+>+ 调整了部分api的用法
 
+[Demo](http://103.45.104.52:8000)|[文档]()
 
 ## 环境
 + PHP 7.0 +
@@ -28,7 +29,8 @@
 
 ## Demo
 
-[http://103.45.104.52:8000](http://103.45.104.52:8000)
+[Demo](http://103.45.104.52:8000)
+
 
 ## 后端依赖组件
 
@@ -40,7 +42,7 @@
 
 ## 前端依赖组件
 > 注意，为解决前端pjax按需加载功能，本项目修改了`pjax`的代码，请勿升级
-> 同样，为优化按钮布局，`RWD-Table-Patterns`的代码也是修改过后的，请勿升级
+> 同样，为优化按钮布局，`RWD-Table-Patterns`的代码也进行了微调，请勿升级
 + [AdminLTE](https://almsaeedstudio.com/)
 + [RWD-Table-Patterns](http://gergeo.se/RWD-Table-Patterns/)
 + [Datetimepicker](http://eonasdan.github.io/bootstrap-datetimepicker/)
@@ -55,6 +57,15 @@
 + [editor.md](https://pandao.github.io/editor.md/)
 + [bootstrap-number-input](https://github.com/wpic/bootstrap-number-input)
 + [fontawesome-iconpicker](https://github.com/itsjavi/fontawesome-iconpicker)
+
+## 安装
+```
+composer require lldca/swoft-admin
+```
+composer安装完成后执行命令:
+```
+php bin/swoft admin:install
+```
 
 ## 加入我们
 如果你对此项目有兴趣，欢迎加入我们。
