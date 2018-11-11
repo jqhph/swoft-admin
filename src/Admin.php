@@ -154,7 +154,10 @@ class Admin
             return static::getModel(new $model());
         }
 
-        throw new InvalidArgumentException("$model is not a valid model");
+        if (is_object($model)) {
+            $model = get_class($model);
+        }
+        throw new InvalidArgumentException("$model 不是一个实体");
     }
 
     /**
