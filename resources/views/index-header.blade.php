@@ -36,7 +36,22 @@
             <style>.content-wrapper,.sidebar-mini.sidebar-collapse .content-wrapper{margin-left:0!important}</style>
         @endif
 </head>
+<script>
+    function LA() {}
+    LA.token = "{{ \Swoft\Support\SessionHelper::wrap() ? \Swoft\Support\SessionHelper::wrap()->token() : '' }}";
 
+    /**
+     *
+     * @param callback
+     * @returns {*}
+     */
+    LA.ready = function (callback) {
+        if (typeof LA.pjaxresponse == 'undefined') {
+            return $(callback);
+        }
+        return $(document).one('pjax:script', callback);
+    };
+</script>
 <body class="swoft-admin-body hold-transition {{config('admin.skin')}} {{join(' ', config('admin.layout'))}}">
 <div class="wrapper">
 
