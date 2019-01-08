@@ -46,15 +46,15 @@ trait MoveAdminConfig
             $append .= <<<EOF
     'components' => [
         'custom' => [
-            'Swoft\\Admin',
-            'Swoft\\Blade'
+            'Swoft\\Admin\\',
+            'Swoft\\Blade\\'
         ],
     ],
 EOF;
         } else {
             $output->writeln("检测到您配置文件中已添加过 <warning>components.custom</warning> 配置，请在安装结束后手动在 <warning>components.custom</warning> 数组里面追加以下命名空间 ");
-            $output->writeln('*    <warning>Swoft\Admin</warning> ');
-            $output->writeln('*    <warning>Swoft\\Blade</warning>'."\n");
+            $output->writeln('*    <warning>Swoft\Admin\\</warning> ');
+            $output->writeln('*    <warning>Swoft\\Blade\\</warning>'."\n");
         }
 
         $append .= $this->getDefaultConfig();

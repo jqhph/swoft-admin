@@ -44,9 +44,6 @@ class {class}
 
         $form->setId($id);
 
-        // 更改布局风格
-        $form->style(Form::STYLE_ROW);
-
         {form}
 
         return $form;
