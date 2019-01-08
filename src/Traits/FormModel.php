@@ -654,7 +654,7 @@ trait FormModel
 
             $rules      = array_merge($rules, $validators[0]);
             $messages   = array_merge($messages, $validators[1]);
-            $attributes = array_merge($attributes, $validators[1]);
+            $attributes = array_merge($attributes, $validators[2]);
         }
 
         $validator = Validator::make($rules, $messages, $attributes);
@@ -663,5 +663,6 @@ trait FormModel
         return $validator->check($input) ? null : $validator->getError();
 
     }
+
 
 }
