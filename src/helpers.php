@@ -187,7 +187,7 @@ if (!function_exists('admin_info')) {
     }
 }
 
-if (!function_exists('get_flash_message')) {
+if (!function_exists('admin_flash_message')) {
     /**
      *
      * @return MessageBag[]
