@@ -55,10 +55,6 @@ class VerifyCsrfToken implements MiddlewareInterface
         $path = $request->getUri()->getPath();
 
         foreach ((array) config('admin.csrf.except') as $except) {
-            if ($except !== '/') {
-                $except = trim($except, '/');
-            }
-
             if ($path === $except) {
                 return true;
             }
