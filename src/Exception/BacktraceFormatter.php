@@ -24,9 +24,8 @@ class BacktraceFormatter
     public function toString(int $start = 0)
     {
         $string = '';
-        foreach ($this->trace as $i => &$item) {
-            $string .= $this->format($start, $item);
-            $start++;
+        foreach (array_slice($this->trace, $start) as $i => &$item) {
+            $string .= $this->format($i, $item);
         }
 
         return $string;
