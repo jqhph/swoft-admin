@@ -15,25 +15,6 @@ class SwitchField extends Field
         '@admin/switchery/switchery.min.js'
     ];
 
-    /**
-     * 默认选择
-     *
-     * @var bool
-     */
-    protected $defaultChecked = false;
-
-    /**
-     * 设置默认选中
-     *
-     * @return $this
-     */
-    public function defaultChecked()
-    {
-        $this->defaultChecked = true;
-
-        return $this;
-    }
-
     public function primary()
     {
         return $this->attribute('data-color', '#0072C6');
