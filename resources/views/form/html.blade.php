@@ -2,7 +2,7 @@
     <label  class="{{$viewClass['label']}} control-label">{{$label}}</label>
     <div class="{{$viewClass['field']}}">
         <div class="input-group">
-            {{$html}}
+            {!! $html !!}
         </div>
         @include('admin::form.help-block')
     </div>
