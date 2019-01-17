@@ -2,14 +2,13 @@
 
 namespace Swoft\Admin\Bean\Parser;
 
-use Swoft\Admin\Bean\Collector\AdminRepositoryCollector;
+use Swoft\Admin\Bean\Collector\AdminRepositoryListenerCollector;
 use Swoft\Bean\Parser\AbstractParser;
-use Swoft\Bean\Annotation\Scope;
 
 /**
- * The parser of Repository
+ * The parser of AdminRepositoryListener
  */
-class AdminRepositoryParser extends AbstractParser
+class AdminRepositoryListenerParser extends AbstractParser
 {
     /**
      * @param string  $className
@@ -27,7 +26,7 @@ class AdminRepositoryParser extends AbstractParser
         $propertyValue = null
     )
     {
-        AdminRepositoryCollector::collect($className, $objectAnnotation, $propertyName, $methodName, $propertyValue);
+        AdminRepositoryListenerCollector::collect($className, $objectAnnotation, $propertyName, $methodName, $propertyValue);
 
         return [$className, Scope::SINGLETON, ''];
     }

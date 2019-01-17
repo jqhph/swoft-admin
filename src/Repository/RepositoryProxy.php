@@ -3,6 +3,7 @@
 namespace Swoft\Admin\Repository;
 
 use Swoft\Admin\Admin;
+use Swoft\Admin\Bean\Collector\AdminRepositoryListenerCollector;
 use Swoft\Admin\Form;
 use Swoft\Admin\Grid\Model;
 use Swoft\Admin\Show;
@@ -11,11 +12,16 @@ use Swoft\Db\QueryBuilder;
 class RepositoryProxy implements RepositoryInterface
 {
     /**
-     * @var RepositoryInterface
+     * @var string
      */
     protected $repository;
 
-    public function __construct(RepositoryInterface $repository)
+    /**
+     * @var []
+     */
+    protected $listeners = [];
+
+    public function __construct(string $repository)
     {
         $this->repository = $repository;
     }
@@ -27,7 +33,7 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function getKeyName()
     {
-        return $this->repository->getKeyName() ?: 'id';
+        return $this->getRepository()->getKeyName() ?: 'id';
     }
 
     /**
@@ -38,7 +44,7 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function find(Model $model)
     {
-        return $this->repository->find($model);
+        return $this->getRepository()->find($model);
     }
 
     /**
@@ -49,7 +55,7 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function findForView(Show $show)
     {
-        return $this->repository->findForView($show);
+        return $this->getRepository()->findForView($show);
     }
 
     /**
@@ -60,7 +66,7 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function findForEdit(Form $form)
     {
-        return $this->repository->findForEdit($form);
+        return $this->getRepository()->findForEdit($form);
     }
 
     /**
@@ -71,7 +77,18 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function insert(Form $form)
     {
-        return $this->repository->insert($form);
+        $listeners = $this->getListeners();
+        foreach ($listeners as $listener) {
+            $listener->beforeInsert($form);
+        }
+
+        $result = $this->getRepository()->insert($form);
+
+        foreach ($listeners as $listener) {
+            $listener->afterInsert($form, $result);
+        }
+
+        return $result;
     }
 
     /**
@@ -82,7 +99,18 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function update(Form $form)
     {
-        return $this->repository->update($form);
+        $listeners = $this->getListeners();
+        foreach ($listeners as $listener) {
+            $listener->beforeUpdate($form);
+        }
+
+        $result = $this->getRepository()->update($form);
+
+        foreach ($listeners as $listener) {
+            $listener->afterUpdate($form, $result);
+        }
+
+        return $result;
     }
 
     /**
@@ -93,7 +121,18 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function delete(Form $form)
     {
-        return $this->repository->delete($form);
+        $listeners = $this->getListeners();
+        foreach ($listeners as $listener) {
+            $listener->beforeDelete($form);
+        }
+
+        $result = $this->getRepository()->delete($form);
+
+        foreach ($listeners as $listener) {
+            $listener->afterDelete($form, $result);
+        }
+
+        return $result;
     }
 
     /**
@@ -105,7 +144,7 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function findForDeleteFiles($id)
     {
-        return $this->repository->findForDeleteFiles($id);
+        return $this->getRepository()->findForDeleteFiles($id);
     }
 
     /**
@@ -115,6 +154,38 @@ class RepositoryProxy implements RepositoryInterface
      */
     public function __call($method, array $arguments)
     {
-        return $this->repository->$method(...$arguments);
+        return $this->getRepository()->$method(...$arguments);
+    }
+
+    /**
+     * @return RepositoryInterface
+     */
+    protected function getRepository()
+    {
+        return \bean($this->repository);
+    }
+
+    /**
+     * @return RepositoryEventInterface[]
+     * @throws InvalidRepositoryListenerException
+     */
+    protected function getListeners()
+    {
+        if (isset($this->listeners[$this->repository])) {
+            return $this->listeners[$this->repository];
+        }
+
+        $listeners = [];
+        foreach (AdminRepositoryListenerCollector::getCollector($this->repository) as $beanName) {
+            /* @var RepositoryEventInterface $listener */
+            $listener = \bean($beanName);
+            if (!$listener instanceof RepositoryEventInterface) {
+                throw new InvalidRepositoryListenerException("$beanName 必须实现 ".RepositoryEventInterface::class.' 接口');
+            }
+
+            $listeners[] = $listener;
+        }
+
+        return $this->listeners[$this->repository] = $listeners;
     }
 }

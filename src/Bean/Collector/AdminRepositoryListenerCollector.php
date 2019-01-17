@@ -2,14 +2,13 @@
 
 namespace Swoft\Admin\Bean\Collector;
 
-use Swoft\Admin\Admin;
-use Swoft\Admin\Bean\Annotation\AdminRepository;
+use Swoft\Admin\Bean\Annotation\AdminRepositoryListener;
 use Swoft\Bean\CollectorInterface;
 
 /**
- * The collector Repository
+ * The collector AdminRepositoryListener
  */
-class AdminRepositoryCollector implements CollectorInterface
+class AdminRepositoryListenerCollector implements CollectorInterface
 {
     /**
      * @var array
@@ -33,12 +32,13 @@ class AdminRepositoryCollector implements CollectorInterface
         $propertyValue = null
     )
     {
-        if ($objectAnnotation instanceof AdminRepository) {
+        if ($objectAnnotation instanceof AdminRepositoryListener) {
             $value = $objectAnnotation->getValue();
-
-            if ($value) {
-                Admin::registerRepository($value, $className);
+            if (!isset(self::$values[$value])) {
+                self::$values[$value] = [];
             }
+
+            self::$values[$value][] = $className;
         }
 
         return null;
@@ -47,8 +47,12 @@ class AdminRepositoryCollector implements CollectorInterface
     /**
      * @return array
      */
-    public static function getCollector()
+    public static function getCollector(string $repository = null)
     {
+        if ($repository) {
+            return isset(self::$values[$repository]) ? self::$values[$repository] : [];
+        }
+
         return self::$values;
     }
 }

@@ -33,7 +33,7 @@ trait Repository
      * @param string $controllerClass
      * @param RepositoryInterface $repository
      */
-    public static function registerRepository(string $controllerClass, RepositoryInterface $repository)
+    public static function registerRepository(string $controllerClass, string $repository)
     {
         static::$repositories[$controllerClass] = new RepositoryProxy($repository);
     }
