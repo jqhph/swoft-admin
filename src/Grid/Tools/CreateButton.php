@@ -38,7 +38,7 @@ class CreateButton extends AbstractTool
 
         return <<<EOT
 <div class="btn-group" >
-    <a href="{$url}" class="btn btn-success" title="{$new}">
+    <a href="{$url}" class="btn btn-success btn-sm" title="{$new}">
         <i class="fa fa-save"></i><span class="hidden-xs">&nbsp;&nbsp;{$new}</span>
     </a>
 </div>

@@ -66,7 +66,7 @@ SCRIPT;
 
         return <<<EOT
 <div class="btn-group" >
-    <button type="button" class="btn btn-custom dropdown-toggle" data-toggle="dropdown">
+    <button type="button" class="btn btn-custom btn-sm dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-download"></i><span class="hidden-xs">&nbsp; {$export} &nbsp;</span>
         <span class="caret"></span>
         <span class="sr-only"></span>

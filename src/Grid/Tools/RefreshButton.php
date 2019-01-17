@@ -36,7 +36,7 @@ EOT;
         $refresh = t('Refresh', 'admin');
 
         return <<<EOT
-&nbsp;<a class=" btn btn-info grid-refresh" ><i class="fa fa-refresh"></i><span class="hidden-xs"> $refresh</span></a>&nbsp;
+&nbsp;<a class=" btn btn-info btn-sm grid-refresh" ><i class="fa fa-refresh"></i><span class="hidden-xs"> $refresh</span></a>&nbsp;
 EOT;
     }
 }

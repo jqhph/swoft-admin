@@ -1,5 +1,5 @@
 <div class="btn-group default">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
         &nbsp;<span class="hidden-xs">{{ t('Action', 'admin') }}</span>
         <span class="caret"></span>
         <span class="sr-only"></span>
