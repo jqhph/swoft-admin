@@ -10,6 +10,11 @@ class Card extends Box
     protected $view = 'admin::widgets.card';
 
     /**
+     * @var string
+     */
+    protected $style = '';
+
+    /**
      * @var bool
      */
     protected $divider = true;
@@ -22,11 +27,15 @@ class Card extends Box
     }
 
     /**
-     * @return $this
+     * Set box style.
+     *
+     * @param string $styles
+     *
+     * @return $this|Box
      */
-    public function disabledDivider()
+    public function style($styles)
     {
-        $this->divider = false;
+        $this->style = $style;
         return $this;
     }
 
@@ -42,7 +51,7 @@ class Card extends Box
             'content'    => $this->content,
             'tools'      => $this->tools,
             'attributes' => $this->formatAttributes(),
-            'divider'    => $this->divider,
+            'style'      => $this->style,
         ];
     }
 
