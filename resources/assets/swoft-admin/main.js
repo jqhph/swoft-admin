@@ -23,6 +23,19 @@ LA.confirm = function (msg, callback, confirmBtn, cancelBtn) {
     });
 };
 
+/**
+ * pjax刷新页面
+ *
+ * @param url
+ */
+LA.reload = function (url) {
+    var data = {container:'#pjax-container'};
+    if (url) {
+        data.url = url;
+    }
+    $.pjax.reload(data);
+};
+
 $.pjax.defaults.timeout = 5000;
 $.pjax.defaults.maxCacheLength = 0;
 // $(document).pjax('a:not(a[target="_blank"])', {
