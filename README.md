@@ -7,7 +7,7 @@
 >+ 解决了`pjax`按需加载问题 
 >+ 调整了部分api的用法，使用更方便
 
-[Demo](http://103.45.104.52:8000)|[文档]()
+[Demo](http://103.45.104.52:8000)|[文档]()|[Demo源码](https://github.com/jqhph/swoft-admin-demo)
 
 ## 环境
 + PHP 7.0 +
