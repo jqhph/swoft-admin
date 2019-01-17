@@ -34,153 +34,66 @@ class RepositoryProxy implements RepositoryInterface
      * 网格数据获取接口
      *
      * @param Model $model
-     * @return array|string
+     * @return array
      */
     public function find(Model $model)
     {
-        $result = $this->processOriginalResult(
-            $this->repository->find($model)
-        );
-
-        if (is_array($result)) {
-            return $result;
-        }
-
-        // 使用实体单表查询
-        /* @var QueryBuilder $query */
-        $query = $result::query();
-        $counter = clone $query;
-
-        $model->getQueries()->each(function (&$value) use ($query, $counter) {
-            $method = $value['method'];
-            $query->$method(...$value['arguments']);
-
-            if (!in_array($method, ['limit', 'orderBy'])) {
-                $counter->$method(...$value['arguments']);
-            }
-        });
-        // 判断是否使用分页
-        $total = $model->allowPaginate() ? $counter->count()->getResult() : 1;
-        $data = [];
-        if ($total) {
-            $data = $query->get()->getResult();
-            $data  = $data ? $data->toArray() : [];
-        }
-
-        return [&$data, $total];
+        return $this->repository->find($model);
     }
 
     /**
      * 详情页数据获取接口
      *
      * @param Show $show
-     * @return array|string
+     * @return array
      */
     public function findForView(Show $show)
     {
-        $result = $this->processOriginalResult(
-            $this->repository->findForView($show)
-        );
-
-        if (is_array($result)) {
-            return $result;
-        }
-
-        $query = $result::findById($show->getId())->getResult();
-
-        return $query ? $query->toArray() : [];
+        return $this->repository->findForView($show);
     }
 
     /**
      * 编辑页数据获取接口
      *
      * @param Form $form
-     * @return array|string
+     * @return array
      */
     public function findForEdit(Form $form)
     {
-        $result = $this->processOriginalResult(
-            $this->repository->findForEdit($form)
-        );
-
-        if (is_array($result)) {
-            return $result;
-        }
-
-        $query = $result::findById($form->getId())->getResult();
-
-        return $query ? $query->toArray() : [];
+        return $this->repository->findForEdit($form);
     }
 
     /**
      * 新增操作
      *
      * @param Form $form
-     * @return int|string
+     * @return int
      */
     public function insert(Form $form)
     {
-        $result = $this->repository->insert($form);
-
-        if (is_int($result) || is_numeric($result)) {
-            return (int)$result;
-        }
-
-        if (is_string($result) && class_exists($result)) {
-            return (int)Admin::getModel($result)
-                ->fill($form->getAttributes())
-                ->save()
-                ->getResult();
-        }
-
-        return 0;
+        return $this->repository->insert($form);
     }
 
     /**
      * 更新操作
      *
      * @param Form $form
-     * @return bool|string
+     * @return bool
      */
     public function update(Form $form)
     {
-        $result = $this->repository->update($form);
-        if (is_bool($result) || is_numeric($result)) {
-            return (bool)$result;
-        }
-
-        if (is_string($result) && class_exists($result)) {
-            $updates = $form->getAttributes();
-
-            return (bool)$result::updateOne($updates, [Admin::getPrimaryKeyName($result) => $form->getId()])->getResult();
-        }
-
-        return false;
+        return $this->repository->update($form);
     }
 
     /**
      * 删除/批量删除操作
      *
      * @param Form $form
-     * @return bool|string
+     * @return bool
      */
     public function delete(Form $form)
     {
-        $result = $this->repository->delete($form);
-
-        if (is_bool($result) || is_numeric($result)) {
-            return (bool)$result;
-        }
-        if (is_string($result) && class_exists($result)) {
-            $ids   = collect(explode(',', $form->getId()))->filter()->toArray();
-            $model = get_class(Admin::getModel($result));
-
-            if (count($ids) == 1) {
-                return (bool)$model::deleteById($ids[0])->getResult();
-            }
-            return (bool)$model::deleteByIds($ids)->getResult();
-        }
-        return false;
+        return $this->repository->delete($form);
     }
 
     /**
@@ -188,38 +101,11 @@ class RepositoryProxy implements RepositoryInterface
      * 用于更新或删除后删除旧文件
      *
      * @param mixed $id
-     * @return array|string
+     * @return array
      */
     public function findForDeleteFiles($id)
     {
-        $result = $this->processOriginalResult(
-            $this->repository->findForDeleteFiles($id)
-        );
-        if (is_array($result)) {
-            return $result;
-        }
-        $model = Admin::getModel($result);
-
-        $result = $result::findById($id)->getResult();
-
-        return $result ? $result->toArray() : [];
-    }
-
-    /**
-     * @param $result
-     * @return array|string
-     */
-    protected function processOriginalResult($result)
-    {
-        if (is_array($result)) {
-            return $result;
-        }
-        if (!is_string($result) || !$result) {
-            return [];
-        }
-        $entity = Admin::getModel($result);
-
-        return $result;
+        return $this->repository->findForDeleteFiles($id);
     }
 
     /**
