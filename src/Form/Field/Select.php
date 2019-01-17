@@ -107,6 +107,7 @@ class Select extends Field
         } else {
             $class = $field;
         }
+        $class = $this->normalizeFieldClass($class);
 
         $script = <<<EOT
 $(document).off('change', "{$this->getElementClassSelector()}");
@@ -142,7 +143,7 @@ EOT;
      */
     public function loads($fields = [], $sourceUrls = [], $idField = 'id', $textField = 'text')
     {
-        $fieldsStr = implode('.', $fields);
+        $fieldsStr = implode('.', $this->normalizeFieldClass($fields));
         $urlsStr = implode('^', $sourceUrls);
         $script = <<<EOT
 var fields = '$fieldsStr'.split('.');
@@ -180,6 +181,21 @@ EOT;
         Admin::script($script);
 
         return $this;
+    }
+
+    /**
+     * @param $fields
+     * @return string|array
+     */
+    protected function normalizeFieldClass($fields)
+    {
+        if (is_array($fields)) {
+            foreach ($fields as &$v) {
+                $v = $this->classPrefix.$v;
+            }
+            return $fields;
+        }
+        return $this->classPrefix.$fields;
     }
 
 
