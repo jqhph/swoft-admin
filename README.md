@@ -55,8 +55,8 @@
 + [fontawesome-iconpicker](https://github.com/itsjavi/fontawesome-iconpicker)
 
 ## 安装
-鉴于目前`swoft`框架注解扫描配置比较繁琐，为此推荐大家使用 [自动集成版](https://github.com/jqhph/swoft-admin-auto)。
-开箱即用，免去繁琐的安装步骤，并提供一些基础功能代码，上手更简单。
+鉴于目前`swoft`框架注解扫描配置比较繁琐，为此推荐大家使用 [自动集成版](https://github.com/jqhph/swoft-admin-auto)：
+开箱即用，免去繁琐的安装步骤，并内置一些基础功能代码，上手更简单。
 
 
 ## 加入我们
