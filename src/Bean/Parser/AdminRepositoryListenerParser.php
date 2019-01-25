@@ -4,6 +4,7 @@ namespace Swoft\Admin\Bean\Parser;
 
 use Swoft\Admin\Bean\Collector\AdminRepositoryListenerCollector;
 use Swoft\Bean\Parser\AbstractParser;
+use Swoft\Bean\Annotation\Scope;
 
 /**
  * The parser of AdminRepositoryListener
