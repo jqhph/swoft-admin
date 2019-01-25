@@ -19,7 +19,7 @@ class Like extends AbstractFilter
             $value = array_filter($value);
         }
 
-        if (is_null($value) || empty($value)) {
+        if (is_null($value) || empty($value) || $this->isIgnoreValue($value)) {
             return;
         }
 

@@ -11,7 +11,7 @@ class NotEqual extends AbstractFilter
     {
         $value = array_get($inputs, $this->column);
 
-        if (!isset($value)) {
+        if ($this->isIgnoreValue($value)) {
             return;
         }
 

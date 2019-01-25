@@ -22,7 +22,7 @@ class Gt extends AbstractFilter
     {
         $value = array_get($inputs, $this->column);
 
-        if (is_null($value)) {
+        if ($this->isIgnoreValue($value)) {
             return;
         }
 

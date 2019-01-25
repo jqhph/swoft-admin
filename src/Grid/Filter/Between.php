@@ -95,26 +95,33 @@ class Between extends AbstractFilter
         if (empty($value)) {
             return;
         }
+        $start = $value['start'] ?? null;
+        $end = $value['end'] ?? null;
+
+        if ($this->isIgnoreValue($start) && $this->isIgnoreValue($end)) {
+            return;
+        }
+        
         if ($this->timestamp) {
-            if (!empty($value['start'])) {
-                $value['start'] = $value['start'] ? strtotime($value['start']) : '';
+            if (!empty($start) && !$this->isIgnoreValue($start)) {
+                $start = $start ? strtotime($start) : '';
             }
-            if (!empty($value['end'])) {
-                $value['end']   = $value['end'] ? strtotime($value['end']) : '';
+            if (!empty($end) && !$this->isIgnoreValue($end)) {
+                $end   = $end ? strtotime($end) : '';
             }
         }
 
-        if (!isset($value['start'])) {
-            return $this->buildCondition($this->column, $value['end'], QueryBuilder::OPERATOR_LTE);
+        if ($this->isIgnoreValue($start)) {
+            return $this->buildCondition($this->column, $end, QueryBuilder::OPERATOR_LTE);
         }
 
-        if (!isset($value['end'])) {
-            return $this->buildCondition($this->column, $value['start'], QueryBuilder::OPERATOR_GTE);
+        if ($this->isIgnoreValue($end)) {
+            return $this->buildCondition($this->column, $start, QueryBuilder::OPERATOR_GTE);
         }
 
         $this->query = 'whereBetween';
 
-        return  [$this->query => [$this->column, $value['start'], $value['end']]];
+        return  [$this->query => [$this->column, $start, $end]];
     }
 
     /**

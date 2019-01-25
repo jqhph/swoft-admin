@@ -22,7 +22,7 @@ class Lt extends AbstractFilter
     {
         $value = array_get($inputs, $this->column);
 
-        if (is_null($value)) {
+        if (is_null($value) || $this->isIgnoreValue($value)) {
             return;
         }
 

@@ -19,7 +19,7 @@ class Ilike extends AbstractFilter
             $value = array_filter($value);
         }
 
-        if (is_null($value) || empty($value)) {
+        if ($this->isIgnoreValue($value)) {
             return;
         }
 

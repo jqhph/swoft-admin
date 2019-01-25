@@ -275,7 +275,7 @@ abstract class AbstractFilter
     {
         $value = array_get($inputs, $this->column, $this->defaultValue);
 
-        if (!isset($value) || $value === '' || (string)$value === Filter::$ignoreValue) {
+        if ($this->isIgnoreValue($value)) {
             return;
         }
 
@@ -493,4 +493,16 @@ abstract class AbstractFilter
 
         throw new \Exception('Method "'.$method.'" not exists.');
     }
+
+    /**
+     * 是否需要忽略的值
+     *
+     * @param $value
+     * @return bool
+     */
+    protected function isIgnoreValue($value)
+    {
+        return !isset($value) || $value === '' || (string)$value === Filter::$ignoreValue;
+    }
+
 }
