@@ -58,6 +58,8 @@
 鉴于目前`swoft`框架注解扫描配置比较繁琐，为此推荐大家使用 [自动集成版](https://github.com/jqhph/swoft-admin-auto)：
 开箱即用，免去繁琐的安装步骤，并内置一些基础功能代码，上手更简单。
 
+[手动安装请点我](https://github.com/jqhph/swoft-admin/blob/6aa5d78174647cb524f365b3ac4cc1493ce0885f/docs/zh/install.md)
+
 
 ## 加入我们
 如果你对此项目有兴趣，欢迎加入我们。
