@@ -46,8 +46,8 @@ trait MoveAdminConfig
             $append .= <<<EOF
     'components' => [
         'custom' => [
-            'Swoft\\Admin\\',
-            'Swoft\\Blade\\'
+            'Swoft\\\\Admin\\\\',
+            'Swoft\\\\Blade\\\\'
         ],
     ],
 EOF;
