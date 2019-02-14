@@ -46,7 +46,10 @@ class BacktraceFormatter
         }
 
         $call = $this->formatCallstring($debug);
-        $args = $this->formatArgs($debug['args']);
+        $args = '';
+        if (!empty($debug['args'])) {
+            $args = $this->formatArgs($debug['args']);
+        }
 
         return "#{$num} {$file}{$call}{$args}\n";
     }
