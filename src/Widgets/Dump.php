@@ -45,17 +45,6 @@ class Dump extends Widget implements Renderable
     }
 
     /**
-     * 禁用自动换行
-     *
-     * @return $this
-     */
-    public function autoWrap()
-    {
-        $this->defaultAttribute('style', 'white-space:normal');
-        return $this;
-    }
-
-    /**
      * @param mixed $content
      * @return bool
      */
@@ -69,7 +58,7 @@ class Dump extends Widget implements Renderable
 
     public function render()
     {
-        $this->defaultAttribute('style', 'white-space:pre');
+        $this->defaultAttribute('style', 'white-space:pre-wrap');
 
         return blade($this->view, [
             'attributes' => $this->formatAttributes(),
