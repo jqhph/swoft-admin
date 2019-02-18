@@ -1,5 +1,5 @@
 <div class="btn-group" style="margin-right:3px">
-    <label class="btn btn-dropbox {{ $btn_class }} {{ $expand ? 'active' : '' }}  btn-sm">
+    <label class="btn btn-dropbox {{ $btn_class }} btn-sm">
         <i class="fa fa-filter"></i><span class="hidden-xs">&nbsp;&nbsp;{{ t('Filter', 'admin') }}</span>
     </label>
     @if($scopes->count() == 1)
