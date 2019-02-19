@@ -133,11 +133,11 @@
 
         this.$btnToolbar = $('[data-responsive-table-toolbar="' + this.id + '"]').addClass('btn-toolbar');
         if(this.$btnToolbar.length === 0) {
-          this.$btnToolbar = $('<div class="btn-toolbar" />');
+            this.$btnToolbar = $('<div class="btn-toolbar" />');
         }
 
         this.$dropdownGroup = $('<div class="btn-group dropdown-btn-group pull-right" />');
-        this.$dropdownBtn = $('<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' + this.options.i18n.display + ' <span class="caret"></span></button>');
+        this.$dropdownBtn = $('<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">' + this.options.i18n.display + ' <span class="caret"></span></button>');
         this.$dropdownContainer = $('<ul class="dropdown-menu"/>');
 
         // Focus btn
@@ -146,7 +146,7 @@
             this.$focusGroup = $('<div class="btn-group focus-btn-group" />');
 
             // Create focus btn
-            this.$focusBtn = $('<button type="button" class="btn btn-default">' + this.options.i18n.focus + '</button>');
+            this.$focusBtn = $('<button type="button" class="btn btn-sm  btn-default">' + this.options.i18n.focus + '</button>');
 
             if(this.options.focusBtnIcon) {
                 this.$focusBtn.prepend('<span class="' + this.options.focusBtnIcon + '"></span> ');
@@ -168,10 +168,10 @@
             });
         }
 
-         // Display-all btn
+        // Display-all btn
         if(this.options.addDisplayAllBtn) {
             // Create display-all btn
-            this.$displayAllBtn = $('<button type="button" class="btn btn-default">' + this.options.i18n.displayAll + '</button>');
+            this.$displayAllBtn = $('<button type="button" class="btn btn-sm  btn-default">' + this.options.i18n.displayAll + '</button>');
             // Add display-all btn to dropdown-btn-group
             this.$dropdownGroup.append(this.$displayAllBtn);
 
@@ -308,12 +308,12 @@
     // Help function for sticky table header
     ResponsiveTable.prototype.updateStickyTableHeader = function() {
         var that              = this,
-          top               = 0,
-          offsetTop         = that.$table.offset().top,
-          scrollTop         = $(this.options.mainContainer).scrollTop() -1, //-1 to accomodate for top border
-          maxTop            = that.$table.height() - that.$stickyTableHeader.height(),
-          rubberBandOffset  = (scrollTop + $(this.options.mainContainer).height()) - $(document).height(),
-          navbarHeight      = 0;
+            top               = 0,
+            offsetTop         = that.$table.offset().top,
+            scrollTop         = $(this.options.mainContainer).scrollTop() -1, //-1 to accomodate for top border
+            maxTop            = that.$table.height() - that.$stickyTableHeader.height(),
+            rubberBandOffset  = (scrollTop + $(this.options.mainContainer).height()) - $(document).height(),
+            navbarHeight      = 0;
 
         //Is there a fixed navbar?
         if($(that.options.fixedNavbar).length) {
@@ -464,68 +464,68 @@
                     .click(function(event){
                         event.stopPropagation();
                     })
-                .change(function(){ // bind change event on checkbox
-                    var $checkbox = $(this),
-                        val = $checkbox.val(),
-                        //all cells under the column, including the header and its clone
-                        $cells = that.$tableWrapper.find('#' + val + ', #' + val + '-clone, [data-columns~='+ val +']');
+                    .change(function(){ // bind change event on checkbox
+                        var $checkbox = $(this),
+                            val = $checkbox.val(),
+                            //all cells under the column, including the header and its clone
+                            $cells = that.$tableWrapper.find('#' + val + ', #' + val + '-clone, [data-columns~='+ val +']');
 
-                    //if display-all is on - save state and carry on
-                    if(that.$table.hasClass('display-all')){
-                        //save state
-                        $.proxy(that.preserveDisplayAll(), that);
-                        //remove display all class
-                        that.$table.removeClass('display-all');
-                        if(that.$tableClone){
-                            that.$tableClone.removeClass('display-all');
-                        }
-                        //switch off button
-                        that.$displayAllBtn.removeClass('btn-primary');
-                    }
-
-                    // loop through the cells
-                    $cells.each(function(){
-                        var $cell = $(this);
-
-                        // is the checkbox checked now?
-                        if ($checkbox.is(':checked')) {
-
-                            // if the cell was already visible, it means its original colspan was >1
-                            // so let's increment the colspan
-                            // This should not be done for th's in thead.
-                            if(!$cell.closest("thead").length && $cell.css('display') !== 'none'){
-                                // make sure new colspan value does not exceed original colspan value
-                                var newColSpan = Math.min(parseInt($cell.prop('colSpan')) + 1, $cell.attr('data-org-colspan'));
-                                // update colspan
-                                $cell.prop('colSpan', newColSpan);
+                        //if display-all is on - save state and carry on
+                        if(that.$table.hasClass('display-all')){
+                            //save state
+                            $.proxy(that.preserveDisplayAll(), that);
+                            //remove display all class
+                            that.$table.removeClass('display-all');
+                            if(that.$tableClone){
+                                that.$tableClone.removeClass('display-all');
                             }
-
-                            // show cell
-                            $cell.show();
-
+                            //switch off button
+                            that.$displayAllBtn.removeClass('btn-primary');
                         }
-                      // checkbox has been unchecked
-                      else {
-                            // decrement colSpan if it's not 1 (because colSpan should not be 0)
-                            // This should not be done for th's in thead.
-                            if(!$cell.closest("thead").length && parseInt($cell.prop('colSpan'))>1){
-                                $cell.prop('colSpan', parseInt($cell.prop('colSpan')) - 1);
+
+                        // loop through the cells
+                        $cells.each(function(){
+                            var $cell = $(this);
+
+                            // is the checkbox checked now?
+                            if ($checkbox.is(':checked')) {
+
+                                // if the cell was already visible, it means its original colspan was >1
+                                // so let's increment the colspan
+                                // This should not be done for th's in thead.
+                                if(!$cell.closest("thead").length && $cell.css('display') !== 'none'){
+                                    // make sure new colspan value does not exceed original colspan value
+                                    var newColSpan = Math.min(parseInt($cell.prop('colSpan')) + 1, $cell.attr('data-org-colspan'));
+                                    // update colspan
+                                    $cell.prop('colSpan', newColSpan);
+                                }
+
+                                // show cell
+                                $cell.show();
+
                             }
-                            // otherwise, hide the cell
+                            // checkbox has been unchecked
                             else {
-                                $cell.hide();
+                                // decrement colSpan if it's not 1 (because colSpan should not be 0)
+                                // This should not be done for th's in thead.
+                                if(!$cell.closest("thead").length && parseInt($cell.prop('colSpan'))>1){
+                                    $cell.prop('colSpan', parseInt($cell.prop('colSpan')) - 1);
+                                }
+                                // otherwise, hide the cell
+                                else {
+                                    $cell.hide();
+                                }
                             }
+                        });
+                    })
+                    .bind('updateCheck', function(){
+                        if ( $th.css('display') !== 'none') {
+                            $(this).prop('checked', true);
+                        }
+                        else {
+                            $(this).prop('checked', false);
                         }
                     });
-                })
-                .bind('updateCheck', function(){
-                    if ( $th.css('display') !== 'none') {
-                        $(this).prop('checked', true);
-                    }
-                    else {
-                        $(this).prop('checked', false);
-                    }
-                });
             } // end if
         }); // end hdrCells loop
 
