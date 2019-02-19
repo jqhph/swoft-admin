@@ -1125,7 +1125,7 @@ input.form-control {
 }
 
 .show-field .text {
-    font-weight: 600
+    font-weight:bold;color:#7b858e
 }
 
 .form-row .control-label:not([for="inputError"]) {
