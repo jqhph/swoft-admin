@@ -8,7 +8,7 @@
                 @endforeach
             <div style="float:left">
                 <div class="btn-group btn-group-sm" style="margin-left:5px;">
-                    <button class="btn btn-primary btn-sm">
+                    <button class="btn btn-info btn-sm">
                         <i class="fa fa-search"></i>&nbsp;&nbsp;{{ t('Search', 'admin') }}
                     </button>
                 </div>

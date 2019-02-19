@@ -168,7 +168,7 @@ EOT;
 
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="{$this->getViewPath()}" class="btn btn-sm btn-primary" title="{$view}">
+    <a href="{$this->getViewPath()}" class="btn btn-sm btn-info" title="{$view}">
         <i class="fa fa-eye"></i><span class="hidden-xs"> {$view}</span>
     </a>
 </div>

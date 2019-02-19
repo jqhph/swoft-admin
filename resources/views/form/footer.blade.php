@@ -6,7 +6,7 @@
 
         @if(in_array('submit', $buttons))
             <div class="btn-group pull-right">
-                <button type="submit" class="btn btn-primary">{{ t('Submit', 'admin') }}</button>
+                <button type="submit" class="btn btn-info">{{ t('Submit', 'admin') }}</button>
             </div>
             @if(in_array('continue_editing', $checkboxes))
             <label class="pull-right" style="margin: 5px 10px 0 0;">
