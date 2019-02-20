@@ -69,11 +69,10 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     public function findForView(Show $show)
     {
-        $entity = $this->entityClass;
-
-        $query = $entity::findById($show->getId())->getResult();
-
-        return $query ? $query->toArray() : [];
+        return Query::table($this->entityClass)
+            ->where($this->getKeyName(), $show->getId())
+            ->one()
+            ->getResult();
     }
 
     /**
@@ -85,11 +84,10 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     public function findForEdit(Form $form)
     {
-        $entity = $this->entityClass;
-
-        $query = $entity::findById($form->getId())->getResult();
-
-        return $query ? $query->toArray() : [];
+        return Query::table($this->entityClass)
+            ->where($this->getKeyName(), $form->getId())
+            ->one()
+            ->getResult();
     }
 
     /**
@@ -149,10 +147,9 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     public function findForDeleteFiles($id)
     {
-        $entity = $this->entityClass;
-
-        $result = $entity::findById($id)->getResult();
-
-        return $result ? $result->toArray() : [];
+        return Query::table($this->entityClass)
+            ->where($this->getKeyName(), $id)
+            ->one()
+            ->getResult();
     }
 }
