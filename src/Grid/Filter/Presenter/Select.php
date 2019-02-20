@@ -47,6 +47,11 @@ class Select extends Presenter
     /**
      * @var bool
      */
+    protected $selectAll = true;
+
+    /**
+     * @var bool
+     */
     protected $clear = false;
 
     /**
@@ -70,6 +75,17 @@ class Select extends Presenter
     $('.{$this->getElementClass()}').val("$ignore").trigger("change");
 EOF
         );
+    }
+
+    /**
+     * 是否禁用“所有”选项
+     *
+     * @return $this
+     */
+    public function disableSelectAll()
+    {
+        $this->selectAll = false;
+        return $this;
     }
 
     /**
@@ -211,8 +227,9 @@ EOT;
     {
         $this->setupScript();
         return [
-            'options' => $this->buildOptions(),
-            'class'   => $this->getElementClass(),
+            'options'   => $this->buildOptions(),
+            'class'     => $this->getElementClass(),
+            'selectAll' => $this->selectAll
         ];
     }
 
