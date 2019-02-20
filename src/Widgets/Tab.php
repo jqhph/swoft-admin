@@ -71,6 +71,7 @@ class Tab extends Widget implements Renderable
             'title'   => $title,
             'href'    => $href,
             'type'    => static::TYPE_LINK,
+            'content' => '',
         ];
 
         if ($active) {
