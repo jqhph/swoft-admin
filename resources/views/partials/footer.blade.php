@@ -18,5 +18,5 @@
 
     </div>
     <!-- Default to the left -->
-    <strong>Powered by <a href="https://github.com/z-song/laravel-admin" target="_blank">swoft-admin</a></strong>
+    <strong>Powered by <a href="https://github.com/jqhph/swoft-admin" target="_blank">Swoft Admin</a></strong>
 </footer>

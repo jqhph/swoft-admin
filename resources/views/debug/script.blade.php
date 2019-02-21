@@ -238,6 +238,8 @@
                 status = "<span class='label label-warning'>302</span> &nbsp; ";
             } else if (status && status >= 400) {
                 status = "<span class='label label-danger'>"+status+"</span> &nbsp; ";
+            } else {
+                status = "<span class='label label-success'>"+status+"</span> &nbsp; ";
             }
 
             var html = "<div class=\"debugger-tab-content route-box\" ><table class=\"table table-hover\">" +
