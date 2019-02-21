@@ -79,8 +79,15 @@ $(document).on('pjax:complete', function (xhr) {
         }
     }
     NProgress.done();
-    init_return_top();
+
+    LA.execWhenReady();
 });
+
+LA.execWhenReady = function () {
+    $('[data-toggle="popover"]').popover();
+
+    init_return_top();
+};
 
 $(function () {
     $('.sidebar-menu li:not(.treeview) > a').on('click', function () {
@@ -89,9 +96,7 @@ $(function () {
         $parent.siblings().removeClass('active').find('li').removeClass('active');
     });
 
-    $('[data-toggle="popover"]').popover();
-
-    init_return_top();
+    LA.execWhenReady();
 });
 
 (function ($) {
