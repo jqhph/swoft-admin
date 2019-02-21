@@ -1397,3 +1397,5 @@ input.form-control {
 .input-group-sm>.form-control,.input-group-sm>.input-group-addon,.input-group-sm>.input-group-btn>.btn {
     border-radius: 0;
 }
+
+.popover-content{white-space:pre-wrap}
