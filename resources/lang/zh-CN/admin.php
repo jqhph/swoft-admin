@@ -102,10 +102,12 @@ return [
     'Notice'                => '提示',
     'Preview'               => '预览',
     'Preview Controller'    => '预览控制器',
-    'No data.'              => '什么都没有~',
+    'No data.'              => '暂无数据。',
     'Example'               => '示例',
     'Code'                  => '代码',
     'Home'                  => '主页',
+    'Current Page'          => '当前页',
+    'Selected Rows'         => '选中行',
     'responsive'            => [
         'Display'               => '  ',
         'Display all'           => ' <i class="glyphicon glyphicon-th icon-th"></i> ',
