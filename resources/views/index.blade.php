@@ -1,5 +1,7 @@
 @if (!is_pjax_request())
     @include('admin::index-header')
+@else
+    <script>LA.pjaxresponse = 1;</script>
 @endif
 
 {!! \Swoft\Admin\Admin::css() !!}
@@ -9,6 +11,4 @@
 
 @if (!is_pjax_request())
     @include('admin::index-footer')
-@else
-    <script>LA.pjaxresponse = 1;</script>
 @endif
