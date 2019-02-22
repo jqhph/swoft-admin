@@ -1399,3 +1399,7 @@ input.form-control {
 }
 
 .popover-content{white-space:pre-wrap}
+
+.card .body {font-size: 14px;color: #555;padding: 20px;}
+
+.info-box .info-box-text {font-size:13px;margin-top:11px;}.info-box .info-box-number{font-weight:normal;font-size:25px;}
