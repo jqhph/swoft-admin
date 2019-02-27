@@ -32,7 +32,7 @@ class DebugHandler extends AbstractProcessingHandler
         }
         $message = &$record['messages'];
         $extra   = $record['extra'] ?: $record['context'];
-        $traces  = &$record['traces'];
+        $traces  = array_get($record, 'traces');
         $file    = $this->getTraceFile($message);
         $sql     = $this->getSql($message);
         $sqlId   = $this->getSqlId($message);
@@ -40,7 +40,7 @@ class DebugHandler extends AbstractProcessingHandler
         $date    = $record['datetime'];
 
         if ($sql) {
-            $traces = (new BacktraceFormatter(array_slice($traces, 8, 16)))->toString();
+            $traces = $traces ? (new BacktraceFormatter(array_slice($traces, 8, 16)))->toString() : '';
             Collector::collectDatabaseQuery($sql, [], null, $file, $sqlId, $traces);
         } else {
             Collector::collectDebugLog($message, $extra, $file, $date->format('Y-m-d H:i:s'));
