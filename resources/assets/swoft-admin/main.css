@@ -900,9 +900,6 @@ table.focus-on tbody tr.focused td {
 
 .card {
     background: #fff;
-    box-shadow: 0 1px 3px rgba(34,25,25,0.1);
-    -moz-box-shadow: 0 1px 3px 1px rgba(34,25,25,0.01);
-    -webkit-box-shadow: 0 1px 3px 1px rgba(34,25,25,0.01);
     margin-bottom: 30px;
     border-radius:4px;
 }
