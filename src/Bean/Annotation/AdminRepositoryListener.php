@@ -12,15 +12,15 @@ class AdminRepositoryListener
     /**
      * @var string
      */
-    private $listener = '';
+    private $repository = '';
 
     public function __construct(array $values)
     {
         if (!empty($values['value'])) {
-            $this->listener = $values['value'];
+            $this->repository = $values['value'];
         }
-        if (!empty($values['listener'])) {
-            $this->listener = $values['listener'];
+        if (!empty($values['repository'])) {
+            $this->repository = $values['repository'];
         }
     }
 
@@ -29,7 +29,7 @@ class AdminRepositoryListener
      */
     public function getValue()
     {
-        return $this->listener;
+        return $this->repository;
     }
 
 }
