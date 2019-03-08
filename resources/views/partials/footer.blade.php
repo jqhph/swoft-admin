@@ -1,6 +1,6 @@
 <!-- Main Footer -->
 <footer class="main-footer">
-@if(config('admin.debug-console'))
+@if(config('admin.debug-console') && \Swoft\Admin\Admin::isDebug())
     @include('admin::debug.content')
 @endif
 

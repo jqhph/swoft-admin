@@ -3,7 +3,7 @@
     @if ($allowNavbarAndSidebar)
         @include('admin::partials.footer')
      @else
-        @if(config('admin.debug-console'))
+        @if(config('admin.debug-console') && \Swoft\Admin\Admin::isDebug())
         @include('admin::debug.content')
         @endif
     @endif
