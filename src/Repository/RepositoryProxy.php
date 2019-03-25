@@ -175,8 +175,23 @@ class RepositoryProxy implements RepositoryInterface
             return $this->listeners[$this->repository];
         }
 
+        $listeners = array_merge(
+            $this->getListenersByRepository($this->repository),
+            $this->getListenersByRepository('*')
+        );
+
+        return $this->listeners[$this->repository] = $listeners;
+    }
+
+    /**
+     * @param null|string $repository
+     * @return array
+     * @throws InvalidRepositoryListenerException
+     */
+    protected function getListenersByRepository(?string $repository)
+    {
         $listeners = [];
-        foreach (AdminRepositoryListenerCollector::getCollector($this->repository) as $beanName) {
+        foreach (AdminRepositoryListenerCollector::getCollector($repository) as $beanName) {
             /* @var RepositoryEventInterface $listener */
             $listener = \bean($beanName);
             if (!$listener instanceof RepositoryEventInterface) {
@@ -186,6 +201,6 @@ class RepositoryProxy implements RepositoryInterface
             $listeners[] = $listener;
         }
 
-        return $this->listeners[$this->repository] = $listeners;
+        return $listeners;
     }
 }

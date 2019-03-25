@@ -12,7 +12,7 @@ class AdminRepositoryListener
     /**
      * @var string
      */
-    private $repository = '';
+    private $repository = '*';
 
     public function __construct(array $values)
     {
