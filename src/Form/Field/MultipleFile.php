@@ -10,6 +10,8 @@ class MultipleFile extends Field
 {
     use UploadField;
 
+    const COLUMN_DELIMITER = '_m_';
+
     /**
      * @var bool
      */
@@ -60,7 +62,7 @@ class MultipleFile extends Field
     /**
      * {@inheritdoc}
      */
-    public function getValidatorData(array $input)
+    public function getValidatorData(array &$input)
     {
         if (Input::request($this->column) === static::FILE_DELETE_FLAG) {
             return false;
@@ -74,7 +76,9 @@ class MultipleFile extends Field
 
         $attributes[$this->column] = $this->label;
 
-        list($rules, $input) = $this->hydrateFiles(array_get($input, $this->column, []));
+        list($rules, $fileInput) = $this->hydrateFiles(array_get($input, $this->column, []));
+
+        $input = array_merge($input, $fileInput);
 
         return [$rules, $this->validationMessages, $attributes];
     }
@@ -95,8 +99,8 @@ class MultipleFile extends Field
         $rules = $input = [];
 
         foreach ($value as $key => $file) {
-            $rules[$this->column.$key] = $this->getRules();
-            $input[$this->column.$key] = $file;
+            $rules[$this->column.static::COLUMN_DELIMITER.$key] = $this->getRules();
+            $input[$this->column.static::COLUMN_DELIMITER.$key] = $file;
         }
 
         return [$rules, $input];

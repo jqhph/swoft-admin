@@ -57,7 +57,7 @@ class File extends Field
     /**
      * {@inheritdoc}
      */
-    public function getValidatorData(array $input)
+    public function getValidatorData(array &$input)
     {
         if (Input::request($this->column) === static::FILE_DELETE_FLAG) {
             return false;

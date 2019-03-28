@@ -672,7 +672,7 @@ class Field implements Renderable
      *
      * @return array|false
      */
-    public function getValidatorData(array $input)
+    public function getValidatorData(array &$input)
     {
         $rules = $attributes = [];
 

@@ -11,7 +11,7 @@ return [
     ':attr must be yes,on or 1' => ':attr的值只能是 "yes" 或 "1"',
     ':attr not a valid datetime' => ':attr必须是日期类型',
     ':attr not a valid file' => ':attr必须是文件类型',
-    ':attr not a valid image' => ':attrb必须是图片类型',
+    ':attr not a valid image' => ':attr必须是图片类型',
     ':attr must be alpha' => ':attr必须是字母',
     ':attr must be alpha-numeric' => ':attr必须是字母或数字',
     ':attr must be alpha-numeric, dash, underscore' => ':attr必须是字母, 数字, 下划线或中划线',

@@ -660,9 +660,23 @@ trait FormModel
         $validator = Validator::make($rules, $messages, $attributes);
         $validator->batch(true);
 
-        return $validator->check($input) ? null : $validator->getError();
-
+        return $validator->check($input) ? null : $this->formatValidationMessages($validator->getError());
     }
 
+    /**
+     * @param array $messages
+     * @return array
+     */
+    protected function formatValidationMessages(array $messages)
+    {
+        $result = [];
+        foreach ($messages as $k => $v) {
+            $f = explode(Field\MultipleFile::COLUMN_DELIMITER, $k)[0];
+
+            $result[$f] = str_replace($k, Admin::translateField($f), $v);
+        }
+
+        return $result;
+    }
 
 }

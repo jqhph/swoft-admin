@@ -50,7 +50,7 @@ class Embeds extends Field
     /**
      * {@inheritdoc}
      */
-    public function getValidatorData(array $input)
+    public function getValidatorData(array &$input)
     {
         if (!array_key_exists($this->column, $input)) {
             return false;
