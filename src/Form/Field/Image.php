@@ -68,6 +68,15 @@ class Image extends File
      */
     protected $disk = 'public';
 
+    public function __construct($column, array $arguments = [])
+    {
+        parent::__construct($column, $arguments);
+
+        $this->attribute('accept', 'image/*');
+        $this->options(['allowedFileTypes' => ['image'], 'allowedFileExtensions' => ['image'],]);
+        $this->setPreviewType('image');
+    }
+
     /**
      * @param array|UploadedFile $image
      *
@@ -89,10 +98,6 @@ class Image extends File
 
     public function render()
     {
-        $this->attribute('accept', 'image/*');
-        $this->options(['allowedFileTypes' => ['image'], 'allowedFileExtensions' => ['image'],]);
-        $this->setPreviewType('image');
-
         return parent::render();
     }
 
