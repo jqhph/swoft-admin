@@ -1,6 +1,6 @@
 @if(isset($title))
     <div class="card-header with-border">
-        <h3 class="box-title"> {{ $title }}</h3>
+        <h4 class="box-title"> {{ $title }} </h4>
     </div>
 @endif
 
@@ -66,11 +66,11 @@
             </tr>
         @endif
         </tbody>
-
-        {!! $grid->renderFooter() !!}
-
     </table>
 </div>
+
+{!! $grid->renderFooter() !!}
+
 @if ($paginator = $grid->paginator())
     <div class="box-footer clearfix" style="background:transparent">
         {!! $paginator !!}
