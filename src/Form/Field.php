@@ -698,7 +698,9 @@ class Field implements Renderable
                 }
                 $input[$column.$key] = array_get($input, $column);
                 $rules[$column.$key] = $fieldRules;
-                $attributes[$column.$key] = $this->label."[$column]";
+
+                $label = Admin::translateField($column);
+                $attributes[$column.$key] = "{$this->label}[$label]";
             }
         }
 
