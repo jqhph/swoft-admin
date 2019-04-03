@@ -46,5 +46,5 @@
         @include('admin::partials.notice')
         {!! $content !!}
     </section>
-    <div class="fixed-bottom-btn"><a id="return-top"><i class="glyphicon glyphicon-arrow-up"></i></a></div>
+    <div class="fixed-bottom-btn"><a id="return-top"><i class="fa fa-chevron-up"></i></a></div>
 @endsection
