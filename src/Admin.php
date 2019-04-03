@@ -288,7 +288,10 @@ class Admin
             return self::$primaryKeyMap[$className];
         }
 
-        $entities   = EntityCollector::getCollector();
+        $entities = EntityCollector::getCollector();
+        if (!isset($entities[$className])) {
+            return null;
+        }
         $fields     = $entities[$className]['field'];
         $idProperty = $entities[$className]['table']['id'];
 
