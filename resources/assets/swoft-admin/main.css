@@ -693,6 +693,10 @@ tbody {
 .table:not(.table-striped) thead tr{
     background: #f5f7fa;
 }
+.table.table-bordered thead tr {
+    background: transparent
+}
+
 th {
     font-weight: 500;
     font-size: 14px
