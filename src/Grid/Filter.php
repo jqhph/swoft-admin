@@ -44,7 +44,7 @@ class Filter
     /**
      * @var string
      */
-    public static $ignoreValue = '-_-';
+    public static $ignoreValue = '___';
 
     /**
      * @var Model
@@ -100,6 +100,21 @@ class Filter
      * @var Layout
      */
     protected $layout;
+
+    /**
+     * @var string
+     */
+    protected $style = 'padding:10px 25px 0';
+
+    /**
+     * @var bool
+     */
+    protected $disableResetButton = false;
+
+    /**
+     * @var bool
+     */
+    protected $disableRefreshButton = false;
 
     /**
      * Create a new filter instance.
@@ -199,6 +214,41 @@ class Filter
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Filter
+     */
+    public function noPadding()
+    {
+        return $this->style('padding:10px 0 5px');
+    }
+
+    /**
+     *
+     * @param string $style
+     * @return $this
+     */
+    public function style(?string $style)
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+
+    public function disableResetButton()
+    {
+        $this->disableResetButton = true;
+
+        return $this;
+    }
+
+    public function disableRefreshButton()
+    {
+        $this->disableRefreshButton = true;
+
+        return $this;
     }
 
     /**
@@ -436,7 +486,11 @@ EOF
             'layout'    => $this->layout,
             'filterID'  => $this->filterID,
             'expand'    => $this->expand,
-            'resetUrl'  => $this->getWithoutQueriesUrl()
+            'resetUrl'  => $this->getWithoutQueriesUrl(),
+            'style'     => $this->style,
+
+            'disableRefreshButton' => $this->disableRefreshButton,
+            'disableResetButton'   => $this->disableResetButton,
         ])->render();
     }
 

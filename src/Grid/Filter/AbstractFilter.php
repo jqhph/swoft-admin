@@ -94,6 +94,11 @@ abstract class AbstractFilter
     protected $width = 3;
 
     /**
+     * @var string
+     */
+    protected $style;
+
+    /**
      * AbstractFilter constructor.
      *
      * @param $column
@@ -118,15 +123,21 @@ abstract class AbstractFilter
         $this->setPresenter(new Text($this->label));
     }
 
+
     /**
      * 宽度设置（1-12）
      *
-     * @param int $width
+     * @param int|string $width
      * @return $this
      */
-    public function width(int $width)
+    public function width($width)
     {
-        $this->width = $width;
+        if (is_numeric($width)) {
+            $this->width = $width;
+        } else {
+            $this->style = 'width:'.$width;
+        }
+
         return $this;
     }
 
@@ -464,6 +475,7 @@ abstract class AbstractFilter
             'value'     => $this->value ?: $this->defaultValue,
             'presenter' => $this->presenter(),
             'width'     => $this->width,
+            'style'     => $this->style,
         ], $this->presenter()->variables());
     }
 
