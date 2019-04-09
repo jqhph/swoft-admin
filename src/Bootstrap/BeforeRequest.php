@@ -48,6 +48,8 @@ class BeforeRequest implements EventHandlerInterface
         /* @var ServerDispatcher $dispatcher */
         $dispatcher = bean('serverDispatcher');
 
+        $dispatcher->addMiddleware(PjaxMiddleware::class);
+
         if (Admin::isDebug() && config('admin.debug-console')) {
             $dispatcher->addMiddleware(DebugMiddleware::class);
         }
