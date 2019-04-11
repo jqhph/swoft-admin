@@ -48,17 +48,17 @@ class CsvExporter extends AbstractExporter
     }
 
     /**
-     * @param Collection $records
+     * @param array $records
      * @return string
      */
-    protected function buildCsvContent(Collection $records)
+    protected function buildCsvContent($records)
     {
         $titles = $this->title ?: [];
 
         ob_start();
         $handle = fopen('php://output', 'w');
 
-        if ($records->count()) {
+        if ($records) {
             if (empty($titles)) {
                 $titles = $this->getHeaderRowFromRecords($records);
             }
@@ -93,9 +93,9 @@ class CsvExporter extends AbstractExporter
      *
      * @return array
      */
-    public function getHeaderRowFromRecords(Collection $records): array
+    public function getHeaderRowFromRecords($records): array
     {
-        $titles = collect(array_dot($records->first()))->keys()->map(
+        $titles = collect(array_dot($records[0] ?? []))->keys()->map(
             function ($key) {
                 $key = str_replace('.', ' ', $key);
 
