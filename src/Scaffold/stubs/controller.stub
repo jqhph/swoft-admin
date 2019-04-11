@@ -76,7 +76,7 @@ class {class}
     {
         $grid = $this->grid();
 
-        if ($response = $grid->export(function (Collection $records) {
+        if ($response = $grid->export(function ($records) {
             // 可以对待导出的内容进行过滤或加工
             return $records;
         })) {
