@@ -57,7 +57,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function getData()
     {
-        return $this->grid->getFilter()->execute(false);
+        return $this->grid->getFilter()->execute(true);
     }
 
     /**
