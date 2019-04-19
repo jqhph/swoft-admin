@@ -1,18 +1,19 @@
-layer.config({maxmin:true,moveOut:true});
-LA.success = function (msg, offset) {
-    layer.msg(msg, {icon:1, offset: offset||'t', anim:4});
+layer.config({maxmin:true,moveOut:true,shade: false});
+LA.success = function (msg, offset, seconds) {
+    return layer.msg(msg, {icon:1, offset: offset||'t', time: (seconds || 2.5) * 1000});
 };
-LA.error = function (msg, offset) {
-    layer.msg(msg, {icon:2, offset: offset||'t', anim:4});
+LA.error = function (msg, offset, seconds) {
+    return layer.msg(msg, {icon:2, offset: offset||'t', time: (seconds || 4) * 1000});
 };
-LA.warning = function (msg, offset) {
-    layer.msg(msg, {icon:3, offset: offset||'t', anim:4});
+LA.warning = function (msg, offset, seconds) {
+    return layer.msg(msg, {icon:7, offset: offset||'t', time: (seconds || 4) * 1000});
 };
-LA.info = function (msg, offset) {
-    layer.msg(msg, { offset: offset||'t', anim:6});
+LA.info = function (msg, offset, seconds) {
+    return layer.msg(msg, {offset: offset||'t', anim:6, time: (seconds || 4) * 1000});
 };
-LA.confirm = function (msg, callback, confirmBtn, cancelBtn) {
-    layer.msg(msg, {
+LA.confirm = function (msg, callback, confirmBtn, cancelBtn, title) {
+    return layer.msg(msg, {
+        title: title || null,
         time: 0,
         icon: 3,
         btn: [confirmBtn || 'Confirm', cancelBtn || 'Cancel'],
@@ -35,6 +36,37 @@ LA.reload = function (url) {
     }
     $.pjax.reload(data);
 };
+
+// 预览图片
+LA.previewImage = function (src, width) {
+    var img = new Image();
+    img.style.display = 'none';
+    img.style.height = 'auto';
+    img.style.width = width || '100%';
+
+    document.body.appendChild(img);
+
+    img.src = src;
+
+    var title = src.split('/').pop();
+    if (title.length > 50) {
+        title = title.substr(0, 50) + '...';
+    }
+
+    layer.open({
+        type: 1,
+        shadeClose: false,
+        content: $(img),
+        title: title,
+        area: width || '50%',
+        closeBtn: 1,
+        skin: 'layui-layer-nobg',
+        end: function () {
+            document.body.removeChild(img);
+        }
+    });
+};
+
 
 $.pjax.defaults.timeout = 5000;
 $.pjax.defaults.maxCacheLength = 0;
