@@ -41,15 +41,28 @@
     LA.token = "{{ \Swoft\Support\SessionHelper::wrap() ? \Swoft\Support\SessionHelper::wrap()->token() : '' }}";
 
     /**
+     * 监听dom加载完成事件
+     * 此方法会自动监听iframe窗口pjax加载js脚本完毕事件
      *
      * @param callback
-     * @returns {*}
+     * @param {window} win iframe窗口window对象, 监听iframe窗dom加载完成事件
+     * @returns  {*}
      */
-    LA.ready = function (callback) {
-        if (typeof LA.pjaxresponse == 'undefined') {
-            return $(callback);
+    LA.ready = function (callback, win) {
+        if (!win || win === window) {
+            if (typeof LA.pjaxresponse == 'undefined') {
+                return $(callback, win || window);
+            }
+            return $(document, win || window).one('pjax:script', callback);
         }
-        return $(document).one('pjax:script', callback);
+
+        var proxy = function (e) {
+            win.$(win.$('#pjax-container')).one('pjax:script', proxy);
+
+            callback(e);
+        };
+
+        win.LA.ready(proxy);
     };
 </script>
 <body class="swoft-admin-body hold-transition {{config('admin.skin')}} {{join(' ', config('admin.layout'))}}">

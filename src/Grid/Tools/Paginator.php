@@ -52,6 +52,9 @@ class Paginator extends AbstractTool
      */
     protected function perPageSelector()
     {
+        if (!$this->grid->perPages) {
+            return;
+        }
         return new PerPageSelector($this->grid);
     }
 
