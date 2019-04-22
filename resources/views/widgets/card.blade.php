@@ -10,7 +10,7 @@
             <div style="clear:both;height:0"></div>
         </div>
     @endif
-    <div class="card-body card-padding panel-collapse collapse" style="display:block;">
+    <div class="card-body card-padding panel-collapse collapse" style="display:block;{!! $padding !!}">
         {!! $content !!}
     </div>
 </div>

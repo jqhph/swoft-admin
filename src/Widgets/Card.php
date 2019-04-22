@@ -19,6 +19,11 @@ class Card extends Box
      */
     protected $divider = true;
 
+    /**
+     * @var string
+     */
+    protected $padding;
+
     public function __construct($title = '', $content = '')
     {
         parent::__construct($title, $content);
@@ -39,6 +44,13 @@ class Card extends Box
         return $this;
     }
 
+    public function padding(string $padding)
+    {
+        $this->padding = "padding:$padding";
+
+        return $this;
+    }
+
     /**
      * Variables in view.
      *
@@ -52,6 +64,7 @@ class Card extends Box
             'tools'      => $this->tools,
             'attributes' => $this->formatAttributes(),
             'style'      => $this->style,
+            'padding'    => $this->padding,
         ];
     }
 

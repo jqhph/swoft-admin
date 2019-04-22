@@ -25,7 +25,7 @@
 @endif
 {!! $grid->renderFilter() !!}
 
-<div class="card-body card-padding panel-collapse collapse in table-responsive">
+<div class="card-body panel-collapse collapse in table-responsive">
     <table class="table table-hover responsive {{ $grid->option('useBordered') ? 'table-bordered' : '' }} " id="{{$__id}}">
         <thead>
         @if ($headers = $grid->getHeaders())
