@@ -408,6 +408,11 @@ abstract class AbstractFilter
         return $this;
     }
 
+    public function getDefault()
+    {
+        return $this->defaultValue;
+    }
+
     /**
      * Get element id.
      *
