@@ -441,6 +441,17 @@ abstract class AbstractFilter
     }
 
     /**
+     * @param $value
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
      * Build conditions of filter.
      *
      * @return mixed
