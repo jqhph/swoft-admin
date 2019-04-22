@@ -171,6 +171,11 @@ abstract class AbstractGrid
     protected $request;
 
     /**
+     * @var string
+     */
+    public $rowSelectorTextColumn;
+
+    /**
      * Create a new grid instance.
      *
      * @param Entity|callable $model
