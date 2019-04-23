@@ -21,16 +21,13 @@ class Where extends AbstractFilter
     /**
      * Where constructor.
      *
-     * @param \Closure $query
-     * @param string   $label
-     * @param string   $column
      */
-    public function __construct($label, \Closure $query, $column = null)
+    public function __construct($label, \Closure $query)
     {
         $this->where = $query;
 
         $this->label = $this->formatLabel($label);
-        $this->column = $column ?: static::getQueryHash($query, $this->label);
+        $this->column = $label ?: static::getQueryHash($query, $this->label);
         $this->id = $this->formatId($this->column);
 
         $this->setupDefaultPresenter();
