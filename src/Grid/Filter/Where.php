@@ -65,6 +65,12 @@ class Where extends AbstractFilter
 
         $this->input = $this->value = $value;
 
-        return $this->buildCondition(...call_user_func($this->where, $value));
+        $condition = call_user_func($this->where, $value);
+
+        if (!$condition) {
+            return;
+        }
+
+        return $this->buildCondition(...$condition);
     }
 }
